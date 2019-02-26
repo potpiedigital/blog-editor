@@ -6,15 +6,22 @@ class App extends Component {
     blocks: [
       { type: 'heading', text: 'hello world' },
       { type: 'text', text: 'another string' },
-    ],
+      { type: 'heading', text: 'hello world' },
+      { type: 'text', text: 'another string' },
+    ].map(this.withKeys),
   };
+
+  withKeys(block, index) {
+    const key = btoa(`${index}: ${JSON.stringify(block)}`);
+    return { key, ...block };
+  }
 
   toComponents(block) {
     switch (block.type) {
       case 'heading':
-        return <h2>{block.text}</h2>;
+        return <h2 key={block.key}>{block.text}</h2>;
       case 'text':
-        return <p>{block.text}</p>;
+        return <p key={block.key}>{block.text}</p>;
       default:
         throw new Error(`unexpected block type: ${block.type}`);
     }
