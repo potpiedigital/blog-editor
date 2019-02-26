@@ -16,6 +16,14 @@ class App extends Component {
     return { key, ...block };
   }
 
+  addHeading = () => {
+    const newHeading = this.withKeys(
+      { type: 'heading', text: 'testing' },
+      this.state.blocks.length,
+    );
+    this.setState({ blocks: [...this.state.blocks, newHeading] });
+  };
+
   toComponents(block) {
     switch (block.type) {
       case 'heading':
@@ -32,11 +40,13 @@ class App extends Component {
   }
 
   render() {
-    return <div>{this.state.blocks.map(this.toComponents)}</div>;
+    return (
+      <div>
+        <div>{this.state.blocks.map(this.toComponents)}</div>
+        <button onClick={this.addHeading}>New heading</button>
+      </div>
+    );
   }
 }
 
 export default App;
-
-// figure out how to render a blocks object using either a p tag or an h1 tag.
-// hint: switch statement that returns a different component based on value inside block object
