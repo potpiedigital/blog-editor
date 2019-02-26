@@ -1,28 +1,20 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  state = { blocks: ['hello world', 'another string'] };
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        {this.state.blocks.map(block => {
+          return <p key={block}>{block}</p>;
+        })}
       </div>
     );
   }
 }
 
 export default App;
+
+// figure out how to render a blocks object using either a p tag or an h1 tag.
+// hint: switch statement that returns a different component based on value inside block object
