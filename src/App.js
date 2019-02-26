@@ -6,8 +6,8 @@ class App extends Component {
     blocks: [
       { type: 'heading', text: 'hello world' },
       { type: 'text', text: 'another string' },
-      { type: 'heading', text: 'hello world' },
-      { type: 'text', text: 'another string' },
+      { type: 'image', url: 'http://fpoimg.com/300x300', text: 'FPO image' },
+      { type: 'blockQuote', text: 'this is a quote' },
     ].map(this.withKeys),
   };
 
@@ -22,6 +22,10 @@ class App extends Component {
         return <h2 key={block.key}>{block.text}</h2>;
       case 'text':
         return <p key={block.key}>{block.text}</p>;
+      case 'image':
+        return <img key={block.key} src={block.url} alt={block.text} />;
+      case 'blockQuote':
+        return <blockquote key={block.key}>{block.text}</blockquote>;
       default:
         throw new Error(`unexpected block type: ${block.type}`);
     }
