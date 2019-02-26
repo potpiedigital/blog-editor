@@ -2,15 +2,26 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-  state = { blocks: ['hello world', 'another string'] };
+  state = {
+    blocks: [
+      { type: 'heading', text: 'hello world' },
+      { type: 'text', text: 'another string' },
+    ],
+  };
+
+  toComponents(block) {
+    switch (block.type) {
+      case 'heading':
+        return <h2>{block.text}</h2>;
+      case 'text':
+        return <p>{block.text}</p>;
+      default:
+        throw new Error(`unexpected block type: ${block.type}`);
+    }
+  }
+
   render() {
-    return (
-      <div>
-        {this.state.blocks.map(block => {
-          return <p key={block}>{block}</p>;
-        })}
-      </div>
-    );
+    return <div>{this.state.blocks.map(this.toComponents)}</div>;
   }
 }
 
