@@ -24,6 +24,30 @@ class App extends Component {
     this.setState({ blocks: [...this.state.blocks, newHeading] });
   };
 
+  addText = () => {
+    const newText = this.withKeys(
+      { type: 'text', text: 'Test number 2 on the button' },
+      this.state.blocks.length,
+    );
+    this.setState({ blocks: [...this.state.blocks, newText] });
+  };
+
+  addImage = () => {
+    const newImage = this.withKeys(
+      { type: 'image', url: 'http://fpoimg.com/300x200', text: 'FPO image' },
+      this.state.blocks.length,
+    );
+    this.setState({ blocks: [...this.state.blocks, newImage] });
+  };
+
+  addBlockquote = () => {
+    const newBlockquote = this.withKeys(
+      { type: 'blockQuote', text: 'this is a NEW quote' },
+      this.state.blocks.length,
+    );
+    this.setState({ blocks: [...this.state.blocks, newBlockquote] });
+  };
+
   toComponents(block) {
     switch (block.type) {
       case 'heading':
@@ -44,6 +68,9 @@ class App extends Component {
       <div>
         <div>{this.state.blocks.map(this.toComponents)}</div>
         <button onClick={this.addHeading}>New heading</button>
+        <button onClick={this.addText}>New Text Field</button>
+        <button onClick={this.addImage}>New Image</button>
+        <button onClick={this.addBlockquote}>New Bockquote</button>
       </div>
     );
   }
