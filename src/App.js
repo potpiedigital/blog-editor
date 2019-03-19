@@ -93,7 +93,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div>{this.state.blocks.map(this.toComponents)}</div>
+        <div>{this.state.blocks.map(this.toComponent)}</div>
         <button onClick={this.addHeading}>New heading</button>
         <button onClick={this.addText}>New Text Field</button>
         <button onClick={this.addImage}>New Image</button>
