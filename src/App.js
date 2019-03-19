@@ -19,10 +19,10 @@ class App extends Component {
         text: 'FPO image',
       },
       { type: BlockType.Blockquote, text: 'this is a quote' },
-    ].map(this.toObjectsWithKeys),
+    ].map(this.toObjectsWithKey),
   };
 
-  toObjectsWithKeys(block, index) {
+  toObjectsWithKey(block, index) {
     const key = btoa(`${index}: ${JSON.stringify(block)}`);
     return { key, ...block };
   }
@@ -30,15 +30,17 @@ class App extends Component {
   // step 2: refactor the addtype functions into generic add block function where you just pass in the block.type as an argument
   addType = option => {
     option = BlockType;
-    const newOption = this.toObjectsWithKeys(
+    const newOption = this.toObjectsWithKey(
       { type: BlockType.Heading, text: 'testing' },
       this.state.blocks.length,
     );
     this.setState({ blocks: [...this.state.blocks, newOption] });
   };
 
+  addBlock = type => {};
+
   addHeading = () => {
-    const newHeading = this.toObjectsWithKeys(
+    const newHeading = this.toObjectsWithKey(
       { type: BlockType.Heading, text: 'testing' },
       this.state.blocks.length,
     );
@@ -46,7 +48,7 @@ class App extends Component {
   };
 
   addText = () => {
-    const newText = this.toObjectsWithKeys(
+    const newText = this.toObjectsWithKey(
       { type: BlockType.Text, text: 'Test number 2 on the button' },
       this.state.blocks.length,
     );
@@ -54,7 +56,7 @@ class App extends Component {
   };
 
   addImage = () => {
-    const newImage = this.toObjectsWithKeys(
+    const newImage = this.toObjectsWithKey(
       {
         type: BlockType.Image,
         url: 'http://fpoimg.com/300x200',
@@ -66,14 +68,14 @@ class App extends Component {
   };
 
   addBlockquote = () => {
-    const newBlockquote = this.toObjectsWithKeys(
+    const newBlockquote = this.toObjectsWithKey(
       { type: BlockType.Blockquote, text: 'this is a NEW quote' },
       this.state.blocks.length,
     );
     this.setState({ blocks: [...this.state.blocks, newBlockquote] });
   };
 
-  toComponents(block) {
+  toComponent(block) {
     switch (block.type) {
       case BlockType.Heading:
         return <h2 key={block.key}>{block.text}</h2>;
