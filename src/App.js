@@ -28,51 +28,32 @@ class App extends Component {
   }
 
   // step 2: refactor the addtype functions into generic add block function where you just pass in the block.type as an argument
-  addType = option => {
-    option = BlockType;
-    const newOption = this.toObjectsWithKey(
-      { type: BlockType.Heading, text: 'testing' },
+
+  addBlock = type => {
+    const newBlock = this.toObjectsWithKey(
+      { type, text: `${new Date().toLocaleString()}` },
       this.state.blocks.length,
     );
-    this.setState({ blocks: [...this.state.blocks, newOption] });
+    if (type === BlockType.Image) {
+      newBlock.url = 'http://fpoimg.com/300x200';
+    }
+    this.setState({ blocks: [...this.state.blocks, newBlock] });
   };
 
-  addBlock = type => {};
-
   addHeading = () => {
-    const newHeading = this.toObjectsWithKey(
-      { type: BlockType.Heading, text: 'testing' },
-      this.state.blocks.length,
-    );
-    this.setState({ blocks: [...this.state.blocks, newHeading] });
+    this.addBlock(BlockType.Heading);
   };
 
   addText = () => {
-    const newText = this.toObjectsWithKey(
-      { type: BlockType.Text, text: 'Test number 2 on the button' },
-      this.state.blocks.length,
-    );
-    this.setState({ blocks: [...this.state.blocks, newText] });
-  };
-
-  addImage = () => {
-    const newImage = this.toObjectsWithKey(
-      {
-        type: BlockType.Image,
-        url: 'http://fpoimg.com/300x200',
-        text: 'FPO image',
-      },
-      this.state.blocks.length,
-    );
-    this.setState({ blocks: [...this.state.blocks, newImage] });
+    this.addBlock(BlockType.Text);
   };
 
   addBlockquote = () => {
-    const newBlockquote = this.toObjectsWithKey(
-      { type: BlockType.Blockquote, text: 'this is a NEW quote' },
-      this.state.blocks.length,
-    );
-    this.setState({ blocks: [...this.state.blocks, newBlockquote] });
+    this.addBlock(BlockType.Blockquote);
+  };
+
+  addImage = () => {
+    this.addBlock(BlockType.Image);
   };
 
   toComponent(block) {
