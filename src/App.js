@@ -27,8 +27,6 @@ class App extends Component {
     return { key, ...block };
   }
 
-  // step 2: refactor the addtype functions into generic add block function where you just pass in the block.type as an argument
-
   addBlock = type => {
     const newBlock = this.toObjectsWithKey(
       { type, text: `${new Date().toLocaleString()}` },
@@ -55,6 +53,8 @@ class App extends Component {
   addImage = () => {
     this.addBlock(BlockType.Image);
   };
+
+  //turn the return components into custom components
 
   toComponent(block) {
     switch (block.type) {
@@ -85,7 +85,5 @@ class App extends Component {
 }
 
 export default App;
-
-// step 1: make buttons that add new (random) text, image and block quotes
 
 // step 3: pass in the props that you want the block to have.
