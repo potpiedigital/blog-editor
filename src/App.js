@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Heading from './components/Heading';
 import './App.css';
 
 const BlockType = {
@@ -54,12 +55,12 @@ class App extends Component {
     this.addBlock(BlockType.Image);
   };
 
-  //turn the return components into custom components
+  //step 3.1, make custom components for other return statment of toComponent function.
 
   toComponent(block) {
     switch (block.type) {
       case BlockType.Heading:
-        return <h2 key={block.key}>{block.text}</h2>;
+        return <Heading key={block.key} text={block.text} />;
       case BlockType.Text:
         return <p key={block.key}>{block.text}</p>;
       case BlockType.Image:
