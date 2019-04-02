@@ -20,16 +20,16 @@ class App extends Component {
         text: 'FPO image',
       },
       { type: BlockType.Blockquote, text: 'this is a quote' },
-    ].map(this.toObjectsWithKey),
+    ].map(this.toObjectWithKey),
   };
 
-  toObjectsWithKey(block, index) {
+  toObjectWithKey(block, index) {
     const key = btoa(`${index}: ${JSON.stringify(block)}`);
     return { key, ...block };
   }
 
   addBlock = type => {
-    const newBlock = this.toObjectsWithKey(
+    const newBlock = this.toObjectWithKey(
       { type, text: `${new Date().toLocaleString()}` },
       this.state.blocks.length,
     );
