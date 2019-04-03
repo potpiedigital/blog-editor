@@ -42,23 +42,9 @@ class App extends Component {
     this.setState({ blocks: [...this.state.blocks, newBlock] });
   };
 
-  addHeading = () => {
-    this.addBlock(BlockType.Heading);
-  };
-
-  addText = () => {
-    this.addBlock(BlockType.Text);
-  };
-
-  addBlockquote = () => {
-    this.addBlock(BlockType.Blockquote);
-  };
-
-  addImage = () => {
-    this.addBlock(BlockType.Image);
-  };
-
-  //step 3.1, make custom components for other return statment of toComponent function.
+  //create a remove block function wich will take the key of the block, find it within the state, remove it, set the new state to somtehing that doesnt have that block in it
+  //add a button to each component that will call removeBlock with the right key.
+  //array splice function to create the new state.
 
   toComponent(block) {
     switch (block.type) {
@@ -79,10 +65,17 @@ class App extends Component {
     return (
       <div>
         <div>{this.state.blocks.map(this.toComponent)}</div>
-        <button onClick={this.addHeading}>New heading</button>
-        <button onClick={this.addText}>New Text Field</button>
-        <button onClick={this.addImage}>New Image</button>
-        <button onClick={this.addBlockquote}>New Bockquote</button>
+        <div>
+          {Object.values(BlockType).map(value => {
+            return (
+              <button
+                onClick={() => {
+                  this.addBlock(value);
+                }}
+              >{`new ${value}`}</button>
+            );
+          })}
+        </div>
       </div>
     );
   }
