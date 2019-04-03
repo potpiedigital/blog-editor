@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Heading from './components/Heading';
 import './App.css';
 
 const BlockType = {
@@ -19,64 +20,47 @@ class App extends Component {
         text: 'FPO image',
       },
       { type: BlockType.Blockquote, text: 'this is a quote' },
-    ].map(this.toObjectsWithKeys),
+    ].map(this.toObjectWithKey),
   };
 
-  toObjectsWithKeys(block, index) {
+  toObjectWithKey(block, index) {
     const key = btoa(`${index}: ${JSON.stringify(block)}`);
     return { key, ...block };
   }
 
-  // step 2: refactor the addtype functions into generic add block function where you just pass in the block.type as an argument
-  addType = option => {
-    option = BlockType;
-    const newOption = this.toObjectsWithKeys(
-      { type: BlockType.Heading, text: 'testing' },
+  addBlock = type => {
+    const newBlock = this.toObjectWithKey(
+      { type, text: `${new Date().toLocaleString()}` },
       this.state.blocks.length,
     );
-    this.setState({ blocks: [...this.state.blocks, newOption] });
+    if (type === BlockType.Image) {
+      newBlock.url = 'http://fpoimg.com/300x200';
+    }
+    this.setState({ blocks: [...this.state.blocks, newBlock] });
   };
 
   addHeading = () => {
-    const newHeading = this.toObjectsWithKeys(
-      { type: BlockType.Heading, text: 'testing' },
-      this.state.blocks.length,
-    );
-    this.setState({ blocks: [...this.state.blocks, newHeading] });
+    this.addBlock(BlockType.Heading);
   };
 
   addText = () => {
-    const newText = this.toObjectsWithKeys(
-      { type: BlockType.Text, text: 'Test number 2 on the button' },
-      this.state.blocks.length,
-    );
-    this.setState({ blocks: [...this.state.blocks, newText] });
-  };
-
-  addImage = () => {
-    const newImage = this.toObjectsWithKeys(
-      {
-        type: BlockType.Image,
-        url: 'http://fpoimg.com/300x200',
-        text: 'FPO image',
-      },
-      this.state.blocks.length,
-    );
-    this.setState({ blocks: [...this.state.blocks, newImage] });
+    this.addBlock(BlockType.Text);
   };
 
   addBlockquote = () => {
-    const newBlockquote = this.toObjectsWithKeys(
-      { type: BlockType.Blockquote, text: 'this is a NEW quote' },
-      this.state.blocks.length,
-    );
-    this.setState({ blocks: [...this.state.blocks, newBlockquote] });
+    this.addBlock(BlockType.Blockquote);
   };
 
-  toComponents(block) {
+  addImage = () => {
+    this.addBlock(BlockType.Image);
+  };
+
+  //step 3.1, make custom components for other return statment of toComponent function.
+
+  toComponent(block) {
     switch (block.type) {
       case BlockType.Heading:
-        return <h2 key={block.key}>{block.text}</h2>;
+        return <Heading key={block.key} text={block.text} />;
       case BlockType.Text:
         return <p key={block.key}>{block.text}</p>;
       case BlockType.Image:
@@ -91,7 +75,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div>{this.state.blocks.map(this.toComponents)}</div>
+        <div>{this.state.blocks.map(this.toComponent)}</div>
         <button onClick={this.addHeading}>New heading</button>
         <button onClick={this.addText}>New Text Field</button>
         <button onClick={this.addImage}>New Image</button>
@@ -102,7 +86,5 @@ class App extends Component {
 }
 
 export default App;
-
-// step 1: make buttons that add new (random) text, image and block quotes
 
 // step 3: pass in the props that you want the block to have.
