@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Heading from './components/Heading';
 import Paragraph from './components/Paragraph';
+import Blockquote from './components/Blockquote';
+import Image from './components/Image';
 import './App.css';
 
 const BlockType = {
@@ -65,9 +67,9 @@ class App extends Component {
       case BlockType.Text:
         return <Paragraph key={block.key} text={block.text} />;
       case BlockType.Image:
-        return <img key={block.key} src={block.url} alt={block.text} />;
+        return <Image key={block.key} url={block.url} text={block.text} />;
       case BlockType.Blockquote:
-        return <blockquote key={block.key}>{block.text}</blockquote>;
+        return <Blockquote key={block.key} text={block.text} />;
       default:
         throw new Error(`unexpected block type: ${block.type}`);
     }
