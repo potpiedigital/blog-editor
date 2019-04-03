@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Heading from './components/Heading';
+import Paragraph from './components/Paragraph';
 import './App.css';
 
 const BlockType = {
@@ -62,7 +63,7 @@ class App extends Component {
       case BlockType.Heading:
         return <Heading key={block.key} text={block.text} />;
       case BlockType.Text:
-        return <p key={block.key}>{block.text}</p>;
+        return <Paragraph key={block.key} text={block.text} />;
       case BlockType.Image:
         return <img key={block.key} src={block.url} alt={block.text} />;
       case BlockType.Blockquote:
