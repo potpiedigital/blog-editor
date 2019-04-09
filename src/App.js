@@ -42,9 +42,15 @@ class App extends Component {
     this.setState({ blocks: [...this.state.blocks, newBlock] });
   };
 
-  //create a remove block function wich will take the key of the block, find it within the state, remove it, set the new state to somtehing that doesnt have that block in it
+  //create a remove block function which will take the key of the block, find it within the state, remove it, set the new state to somtehing that doesnt have that block in it
   //add a button to each component that will call removeBlock with the right key.
   //array splice function to create the new state.
+  removeBlock = type => {
+    const byeBlock = this.toObjectWithKey(type).splice(
+      this.state.blocks.length,
+    );
+    this.setState({ blocks: [...this.state.blocks, byeBlock] });
+  };
 
   toComponent(block) {
     switch (block.type) {

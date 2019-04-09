@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 
 export default class Image extends Component {
   render() {
-    return <img src={this.props.url} alt={this.props.text} />;
+    return (
+      <div>
+        <img src={this.props.url} alt={this.props.text} />
+        <button onClick={this.props.removeBlock}>Remove Me</button>
+      </div>
+    );
   }
 }
