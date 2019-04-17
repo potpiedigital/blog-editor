@@ -42,26 +42,50 @@ class App extends Component {
     this.setState({ blocks: [...this.state.blocks, newBlock] });
   };
 
-  //create a remove block function which will take the key of the block, find it within the state, remove it, set the new state to somtehing that doesnt have that block in it
-  //add a button to each component that will call removeBlock with the right key.
-  //array splice function to create the new state.
-  removeBlock = type => {
-    const byeBlock = this.toObjectWithKey(type).splice(
-      this.state.blocks.length,
-    );
-    this.setState({ blocks: [...this.state.blocks, byeBlock] });
+  removeBlock = key => {
+    const blocks = this.state.blocks.slice();
+    const block = blocks.find(b => b.key === key);
+    const index = blocks.indexOf(block);
+    blocks.splice(index, 1);
+    this.setState({ blocks });
   };
 
   toComponent(block) {
+    const { removeBlock } = this;
     switch (block.type) {
       case BlockType.Heading:
-        return <Heading key={block.key} text={block.text} />;
+        return (
+          <Heading
+            onRemove={() => removeBlock(block.key)}
+            key={block.key}
+            text={block.text}
+          />
+        );
       case BlockType.Text:
-        return <Paragraph key={block.key} text={block.text} />;
+        return (
+          <Paragraph
+            onRemove={() => removeBlock(block.key)}
+            key={block.key}
+            text={block.text}
+          />
+        );
       case BlockType.Image:
-        return <Image key={block.key} url={block.url} text={block.text} />;
+        return (
+          <Image
+            onRemove={() => removeBlock(block.key)}
+            key={block.key}
+            url={block.url}
+            text={block.text}
+          />
+        );
       case BlockType.Blockquote:
-        return <Blockquote key={block.key} text={block.text} />;
+        return (
+          <Blockquote
+            onRemove={() => removeBlock(block.key)}
+            key={block.key}
+            text={block.text}
+          />
+        );
       default:
         throw new Error(`unexpected block type: ${block.type}`);
     }
@@ -70,7 +94,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div>{this.state.blocks.map(this.toComponent)}</div>
+        <div>{this.state.blocks.map(this.toComponent, this)}</div>
         <div>
           {Object.values(BlockType).map(value => {
             return (

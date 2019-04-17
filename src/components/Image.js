@@ -5,7 +5,7 @@ export default class Image extends Component {
     return (
       <div>
         <img src={this.props.url} alt={this.props.text} />
-        <button onClick={this.props.removeBlock}>Remove Me</button>
+        <button onClick={this.props.onRemove}>Remove Me</button>
       </div>
     );
   }
